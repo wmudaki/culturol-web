@@ -3,6 +3,9 @@ import {View, useWindowDimensions, Text, Pressable} from "react-native-web";
 import Ionicons from "react-native-vector-icons/dist/Ionicons.js";
 import Feather from "react-native-vector-icons/dist/Feather.js";
 import LinearGradient from "react-native-web-linear-gradient";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {setTab} from "../state/appActions";
 
 function NavButtons(props) {
     return(
@@ -18,7 +21,7 @@ function NavButtons(props) {
                 }}
             >
                 {
-                    props.tab === 'centers' || props.tab === 'home'
+                    props.app.tab === 'centers' || props.app.tab === 'home'
                     ? <Pressable
                             style={ state => [{
                                 height: 70,
@@ -44,7 +47,7 @@ function NavButtons(props) {
                         : null
                 }
                 {
-                    props.tab === 'centers' || props.tab === 'contact'
+                    props.app.tab === 'centers' || props.app.tab === 'contact'
                     ? <Pressable
                             style={ state => [{
                                 height: 70,
@@ -152,14 +155,14 @@ function NavBar(props) {
                     }}
                 >
                     <Pressable
-                        onPress={() => setTab('home')}
+                        onPress={() => props.setTab('home')}
                         style={ state => [{
                             flexDirection: 'row',
                             alignItems: 'center',
                             borderRadius: props.width * 0.1,
-                            backgroundColor:state.hovered || tab === 'home' ?  '#ff0092' : null,
-                            boxShadow: state.hovered || tab === 'home' ? '1px 1px 10px #800' : null,
-                            borderWidth:state.hovered || tab === 'home' ? null : 3,
+                            backgroundColor:state.hovered || props.app.tab === 'home' ?  '#ff0092' : null,
+                            boxShadow: state.hovered || props.app.tab === 'home' ? '1px 1px 10px #800' : null,
+                            borderWidth:state.hovered || props.app.tab === 'home' ? null : 3,
                             borderColor: '#888',
                             margin: 15,
                             padding: 10,
@@ -182,14 +185,14 @@ function NavBar(props) {
                         </Text>
                     </Pressable>
                     <Pressable
-                        onPress={() => setTab('centers')}
+                        onPress={() => props.setTab('centers')}
                         style={ state => [{
                             flexDirection: 'row',
                             alignItems: 'center',
                             borderRadius: props.width * 0.1,
-                            backgroundColor:state.hovered || tab === 'centers' ? '#ff0092' : null,
-                            boxShadow: state.hovered || tab === 'centers' ? '1px 1px 10px #800' : null,
-                            borderWidth: state.hovered || tab === 'centers' ? null : 3,
+                            backgroundColor:state.hovered || props.app.tab === 'centers' ? '#ff0092' : null,
+                            boxShadow: state.hovered || props.app.tab === 'centers' ? '1px 1px 10px #800' : null,
+                            borderWidth: state.hovered || props.app.tab === 'centers' ? null : 3,
                             borderColor: '#888',
                             margin: 15,
                             padding: 10,
@@ -212,14 +215,14 @@ function NavBar(props) {
                         </Text>
                     </Pressable>
                     <Pressable
-                        onPress={() => setTab('contact')}
+                        onPress={() => props.setTab('contact')}
                         style={ state => [{
                             flexDirection: 'row',
                             alignItems: 'center',
                             borderRadius: props.width * 0.1,
-                            backgroundColor:state.hovered || tab === 'contact' ? '#ff0092' : null,
-                            boxShadow: state.hovered || tab === 'contact' ? '1px 1px 10px #800' : null,
-                            borderWidth: state.hovered || tab === 'contact' ? null : 3,
+                            backgroundColor:state.hovered || props.app.tab === 'contact' ? '#ff0092' : null,
+                            boxShadow: state.hovered || props.app.tab === 'contact' ? '1px 1px 10px #800' : null,
+                            borderWidth: state.hovered || props.app.tab === 'contact' ? null : 3,
                             borderColor: '#888',
                             margin: 15,
                             padding: 10,
@@ -268,4 +271,15 @@ function Home(props) {
     )
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+    const {app} = state;
+    return {app};
+}
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        setTab,
+    }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
