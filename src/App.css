@@ -7,6 +7,10 @@
   src: url('./assets/fonts/Comfortaa-Medium.ttf');
   font-family: Comfortaa-Medium;
 }
+@font-face {
+  src: url('./assets/fonts/Comfortaa-Light.ttf');
+  font-family: Comfortaa-Light;
+}
 
 @font-face {
   src: url("../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf");
